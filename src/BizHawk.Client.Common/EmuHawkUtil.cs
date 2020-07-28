@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using BizHawk.Common;
 
-namespace BizHawk.Client.EmuHawk
+namespace BizHawk.Client.Common
 {
 	public static class EmuHawkUtil
 	{

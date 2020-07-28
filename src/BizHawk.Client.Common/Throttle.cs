@@ -2,12 +2,11 @@
 using System.Diagnostics;
 using System.Threading;
 
-using BizHawk.Client.Common;
 using BizHawk.Common;
 
 //this throttle is nitsuja's fine-tuned techniques from desmume
 
-namespace BizHawk.Client.EmuHawk
+namespace BizHawk.Client.Common
 {
 	public class Throttle
 	{
@@ -23,7 +22,8 @@ namespace BizHawk.Client.EmuHawk
 		public bool signal_continuousFrameAdvancing;
 		public bool signal_overrideSecondaryThrottle;
 
-		public void Step(Config config, Sound sound, bool allowSleep, int forceFrameSkip)
+		/// <param name="getBufferDeficit">should return number of seconds</param>
+		public void Step(Config config, Func<double> getBufferDeficit, bool allowSleep, int forceFrameSkip)
 		{
 			//TODO - figure out what allowSleep is supposed to be used for
 			//TODO - figure out what forceFrameSkip is supposed to be used for
@@ -110,7 +110,7 @@ namespace BizHawk.Client.EmuHawk
 			}
 			else if ((extraThrottle || signal_paused || config.ClockThrottle || signal_overrideSecondaryThrottle) && allowSleep)
 			{
-				SpeedThrottle(sound, signal_paused);
+				SpeedThrottle(getBufferDeficit, signal_paused);
 			}
 
 			if (config.AutoMinimizeSkipping && config.FrameSkip != 0)
@@ -306,7 +306,8 @@ namespace BizHawk.Client.EmuHawk
 			return rv;
 		}
 
-		void SpeedThrottle(Sound sound, bool paused)
+		/// <param name="getBufferDeficit">should return number of seconds</param>
+		void SpeedThrottle(Func<double> getBufferDeficit, bool paused)
 		{
 			AutoFrameSkip_BeforeThrottle();
 
@@ -322,7 +323,7 @@ namespace BizHawk.Client.EmuHawk
 
 				if (elapsedTime >= timePerFrame)
 				{
-					int maxMissedFrames = (int)Math.Ceiling((sound.SoundMaxBufferDeficitMs / 1000.0) / ((double)timePerFrame / afsfreq));
+					int maxMissedFrames = (int)Math.Ceiling(getBufferDeficit() / ((double)timePerFrame / afsfreq));
 					if (maxMissedFrames < 3)
 						maxMissedFrames = 3;
 

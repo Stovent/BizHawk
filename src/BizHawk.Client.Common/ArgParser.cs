@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-using BizHawk.Client.Common;
-
-namespace BizHawk.Client.EmuHawk
+namespace BizHawk.Client.Common
 {
 	public class ArgParser
 	//parses command line arguments and adds the values to a class attribute

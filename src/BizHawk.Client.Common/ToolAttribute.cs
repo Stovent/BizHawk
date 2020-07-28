@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BizHawk.Client.EmuHawk
+namespace BizHawk.Client.Common
 {
 	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class ToolAttribute : Attribute

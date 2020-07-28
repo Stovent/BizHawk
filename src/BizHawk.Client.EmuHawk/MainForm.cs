@@ -2773,7 +2773,7 @@ namespace BizHawk.Client.EmuHawk
 			_throttle.signal_frameAdvance = _runloopFrameAdvance;
 			_throttle.signal_continuousFrameAdvancing = _runloopFrameProgress;
 
-			_throttle.Step(Config, Sound, allowSleep: true, forceFrameSkip: -1);
+			_throttle.Step(Config, () => Sound.SoundMaxBufferDeficitMs / 1000.0, allowSleep: true, forceFrameSkip: -1);
 		}
 
 		public void FrameAdvance()

@@ -3,11 +3,9 @@ using System.IO;
 using System.Net;
 using System.Threading;
 
-using BizHawk.Client.Common;
-
 using Newtonsoft.Json.Linq;
 
-namespace BizHawk.Client.EmuHawk
+namespace BizHawk.Client.Common
 {
 	public static class UpdateChecker
 	{
