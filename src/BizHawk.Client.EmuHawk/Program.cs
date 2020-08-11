@@ -213,9 +213,9 @@ namespace BizHawk.Client.EmuHawk
 				else
 				{
 					using var mf = new MainForm(args);
-					var title = mf.Text;
+//					var title = mf.Text;
 					mf.Show();
-					mf.Text = title;
+//					mf.Text = title;
 					try
 					{
 						GlobalWin.ExitCode = mf.ProgramRunLoop();
