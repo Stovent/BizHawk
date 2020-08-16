@@ -2551,9 +2551,8 @@ namespace BizHawk.Client.EmuHawk
 			base.OnClosed(e);
 		}
 
-		private void MainformMenu_MenuActivate(object sender, EventArgs e)
+		public void MaybePauseFromMenuOpened()
 		{
-			HandlePlatformMenus();
 			if (Config.PauseWhenMenuActivated)
 			{
 				_wasPaused = EmulatorPaused;
@@ -2562,13 +2561,18 @@ namespace BizHawk.Client.EmuHawk
 			}
 		}
 
-		private void MainformMenu_MenuDeactivate(object sender, EventArgs e)
+		public void MaybeUnpauseFromMenuClosed()
 		{
-			if (!_wasPaused)
-			{
-				UnpauseEmulator();
-			}
+			if (!_wasPaused) UnpauseEmulator();
 		}
+
+		private void MainformMenu_MenuActivate(object sender, EventArgs e)
+		{
+			HandlePlatformMenus();
+			MaybePauseFromMenuOpened();
+		}
+
+		private void MainformMenu_MenuDeactivate(object sender, EventArgs e) => MaybeUnpauseFromMenuClosed();
 
 		private static void FormDragEnter(object sender, DragEventArgs e)
 		{
