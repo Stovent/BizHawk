@@ -177,6 +177,7 @@ namespace BizHawk.Client.Common
 			if (frame <= Last)
 			{
 				CaptureReGreenZone(frame, source);
+				return;
 			}
 
 			_current.Capture(frame,
